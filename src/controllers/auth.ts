@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 export class AuthController {
     public async login(req: Request, res: Response): Promise<void> {
         const { email, password } = req.body;
+        console.log("Login request received:", { email, password });
         if (!email || !password) {
             res.status(statusCode.NO_CONTENT).json({ message: "All fields are required" });
             return;
@@ -21,7 +22,7 @@ export class AuthController {
                 res.status(statusCode.UNAUTHORIZED).json({ message: "Invalid credentials" });
                 return;
             }
-            //generate JWT token
+
             const jwtSecret = process.env.JWT_SECRET;
             if (!jwtSecret) {
                 res.status(statusCode.INTERNAL_SERVER_ERROR).json({ message: "JWT secret not configured" });

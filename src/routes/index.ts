@@ -12,6 +12,11 @@ export const setUserRoutes = () => {
     router.get('/', indexController.getIndex);
     router.get('/getUser/:id',verifyToken, userController.getUser);
     router.post('/createUser', userController.createUser);
+    
+    return router;
+};
+export const setAuthRoutes = () => {
+    router.post('/refresh', authController.refreshToken);
     router.post('/login', authController.login);
     return router;
 };
