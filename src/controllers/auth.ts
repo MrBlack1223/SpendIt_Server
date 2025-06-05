@@ -87,9 +87,23 @@ export class AuthController {
                         maxAge: 86400000,
                         secure: process.env.NODE_ENV === 'production',
                     })
+                    .json({ message: "Token refreshed successfully" });
+                    return;
                 });
         } catch (error) {
             console.error("Error refreshing token:", error);
+            res.status(statusCode.INTERNAL_SERVER_ERROR).json({ message: "Internal server error" });
+        }
+    }
+    public async logout (req: Request, res: Response): Promise<void>  {
+        try {
+            res
+                .status(statusCode.SUCCESS)
+                .clearCookie('token', { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production' })
+                .clearCookie('refreshToken', { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production' })
+                .json({ message: "Logout successful" });
+        } catch (error) {
+            console.error("Error logging out:", error);
             res.status(statusCode.INTERNAL_SERVER_ERROR).json({ message: "Internal server error" });
         }
     }

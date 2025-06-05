@@ -25,7 +25,7 @@ export class UserController {
         res.status(statusCode.SUCCESS).json({ message: "User created successfully", user: { newUser } });
     }
     public async getUser (req: Request, res: Response): Promise<void>{
-        const userId = req.params.id;
+        const userId = req.userId;
         if (!userId) {
             res.status(statusCode.NO_CONTENT).json({ message: "User is not authenticated" });
             return;
@@ -42,7 +42,7 @@ export class UserController {
                 email: user.email,
             }
 
-            res.status(statusCode.SUCCESS).json({ userWithNoPassword });
+            res.status(statusCode.SUCCESS).json( userWithNoPassword);
         } catch (error) {
             console.error("Error fetching user:", error);
             res.status(statusCode.INTERNAL_SERVER_ERROR).json({ message: "Internal server error" });

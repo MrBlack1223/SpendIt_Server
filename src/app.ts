@@ -1,5 +1,5 @@
 import express from 'express';
-import { setAuthRoutes, setUserRoutes } from './routes/index';
+import { setAuthRoutes, setExpenseRoutes, setGroupRoutes, setUserRoutes } from './routes/index';
 import dotenv from 'dotenv';
 import { connectToDatabase } from './config/db';
 import cookieParser from "cookie-parser";
@@ -21,8 +21,12 @@ dotenv.config();
 // Initialize routes
 const userRoutes = setUserRoutes();
 const authRoutes = setAuthRoutes();
+const groupRoutes = setGroupRoutes();
+const expenseRoutes = setExpenseRoutes();
 app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/group', groupRoutes);
+app.use('/expense', expenseRoutes);
 
 app.listen(PORT, () => {
     connectToDatabase()

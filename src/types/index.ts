@@ -19,3 +19,23 @@ export interface IUser extends Document {
     email: string;
     password: string;
 }
+export interface IGroup extends Document {
+    name: string;
+    users: IUser[];
+    expenses: IExpense[];
+}
+export interface ISplitAmount {
+    user: IUser;
+    amount: number;
+}
+export interface IExpense extends Document {
+    description: string;
+    users: IUser[];
+    amount: number;
+    date: Date;
+    group: IGroup;
+    paidBy: IUser;
+    splitType: 'equal' | 'unequal';
+    splitAmounts?: ISplitAmount[];
+    notes?: string;
+}
